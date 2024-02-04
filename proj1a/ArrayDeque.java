@@ -19,6 +19,8 @@ public class ArrayDeque<T> {
         size = other.size;
     }
 
+     */
+
     private void resize(int capacity) {
         T[] a = (T[]) new Object[capacity];
         if (nextLast == 0) {
@@ -32,7 +34,7 @@ public class ArrayDeque<T> {
         }
         items = a;
     }
-     */
+
 
     public void addFirst(T item) {
         if (size == items.length) {
