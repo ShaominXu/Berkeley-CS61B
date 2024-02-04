@@ -1,11 +1,11 @@
 public class LinkedListDeque<T> {
 
-    public static class IntNode<T>{
-        public IntNode prev;
-        public T item;
-        public IntNode next;
+    public static class IntNode<T> {
+        private IntNode prev;
+        private T item;
+        private IntNode next;
 
-        public IntNode(IntNode p, T i, IntNode n){
+        public IntNode(IntNode p, T i, IntNode n) {
             prev = p;
             item = i;
             next = n;
@@ -16,7 +16,7 @@ public class LinkedListDeque<T> {
     private int size;
 
 
-    public LinkedListDeque(){
+    public LinkedListDeque() {
         sentF = new IntNode(null, 0,sentB);
         sentB =  new IntNode(sentF, 0, null);
         sentF.next = sentB;
@@ -24,7 +24,7 @@ public class LinkedListDeque<T> {
 
     }
 
-    public LinkedListDeque(LinkedListDeque other){
+    public LinkedListDeque(LinkedListDeque other) {
         IntNode node = other.sentF;
         IntNode newNode = sentF;
         newNode.item = node.item;
@@ -35,17 +35,17 @@ public class LinkedListDeque<T> {
         }
     }
 
-    public T getRecursive(int index){
+    public T getRecursive(int index) {
         if (index >= size) {
             return null;
         }
         if (index == 0) {
-            return (T)sentF.next.item;
+            return (T) sentF.next.item;
         }
         return getRecursive(index - 1);
 
     }
-    public void addFirst(T item){
+    public void addFirst(T item) {
         size += 1;
         IntNode newNode = new IntNode(sentF, item, sentF.next);
         sentF.next.prev = newNode;
@@ -53,39 +53,39 @@ public class LinkedListDeque<T> {
 
     }
 
-    public void addLast(T item){
+    public void addLast(T item) {
         size += 1;
         IntNode newNode = new IntNode(sentB.prev, item, sentB);
         sentB.prev.next = newNode;
         sentB.prev = newNode;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return size == 0;
     }
 
-    public int size(){
+    public int size() {
         return size;
     }
 
 
-    public void printDeque(){
+    public void printDeque() {
         IntNode p = sentF;
-        while (p.next != sentB){
+        while (p.next != sentB) {
             p = p.next;
             System.out.print(p.item);
         }
         System.out.println();
     }
 
-    public T removeFirst(){
+    public T removeFirst() {
         size -= 1;
-        if (sentF.next != sentB){
+        if (sentF.next != sentB) {
             T p = (T) sentF.next.item;
             sentF.next = sentF.next.next;
             sentF.next.prev = sentF;
             return p;
-        }else{
+        } else {
             return null;
         }
 
@@ -103,7 +103,7 @@ public class LinkedListDeque<T> {
         }
     }
 
-    public T get(int index){
+    public T get(int index) {
         if (index >= size) {
             return null;
         }
@@ -119,4 +119,5 @@ public class LinkedListDeque<T> {
     }
 
 }
+
 
