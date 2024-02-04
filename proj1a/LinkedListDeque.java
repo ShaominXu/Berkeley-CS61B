@@ -17,7 +17,7 @@ public class LinkedListDeque<T> {
 
 
     public LinkedListDeque() {
-        sentF = new IntNode(null, 0,sentB);
+        sentF = new IntNode(null, 0, sentB);
         sentB =  new IntNode(sentF, 0, null);
         sentF.next = sentB;
         size = 0;
@@ -91,7 +91,7 @@ public class LinkedListDeque<T> {
 
     }
 
-    public T removeLast(){
+    public T removeLast() {
         size -= 1;
         if (sentB.prev != sentF) {
             T p = (T) sentB.prev.item;
