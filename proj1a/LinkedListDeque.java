@@ -1,6 +1,6 @@
 public class LinkedListDeque<T> {
 
-    public static class IntNode<T> {
+    private static class IntNode<T> {
         private IntNode prev;
         private T item;
         private IntNode next;
@@ -23,7 +23,7 @@ public class LinkedListDeque<T> {
         size = 0;
 
     }
-
+    /*
     public LinkedListDeque(LinkedListDeque other) {
         IntNode node = other.sentF;
         IntNode newNode = sentF;
@@ -34,6 +34,7 @@ public class LinkedListDeque<T> {
             newNode = newNode.next;
         }
     }
+    */
 
     public T getRecursive(int index) {
         if (index >= size) {

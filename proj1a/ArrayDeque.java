@@ -11,7 +11,7 @@ public class ArrayDeque<T> {
         nextLast = 1;
         size = 0;
     }
-
+    /*
     public ArrayDeque(ArrayDeque other) {
         System.arraycopy(items, 0, other, 0, other.items.length);
         nextFirst = other.nextFirst;
@@ -32,6 +32,7 @@ public class ArrayDeque<T> {
         }
         items = a;
     }
+     */
 
     public void addFirst(T item) {
         if (size == items.length) {
