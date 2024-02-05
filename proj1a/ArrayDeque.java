@@ -1,102 +1,106 @@
 public class ArrayDeque<T> {
-
-    private static int REFACTOR = 2;
     private T[] items;
-    private int nextFirst, nextLast;
     private int size;
+    private int front;
+    private int rear;
 
+    // Constructor
     public ArrayDeque() {
         items = (T[]) new Object[8];
-        nextFirst = 0;
-        nextLast = 1;
         size = 0;
-    }
-    /*
-    public ArrayDeque(ArrayDeque other) {
-        System.arraycopy(items, 0, other, 0, other.items.length);
-        nextFirst = other.nextFirst;
-        nextLast = other.nextLast;
-        size = other.size;
+        front = 0;
+        rear = 1;
     }
 
-     */
-
+    // Helper method to resize the array
     private void resize(int capacity) {
-        T[] a = (T[]) new Object[capacity];
-        if (nextLast == 0) {
-            nextLast = items.length;
-            System.arraycopy(items, 0, a, 0, nextLast);
-        } else {
-            System.arraycopy(items, 0, a, 0, nextLast);
-            int len = items.length - nextLast;
-            nextFirst = a.length - len - 1;
-            System.arraycopy(items, nextLast, a, nextFirst + 1, len);
+        T[] newItems = (T[]) new Object[capacity];
+        int oldIndex = front;
+        int newIndex = 0;
+
+        for (int i = 0; i < size; i++) {
+            newItems[newIndex] = items[oldIndex];
+            oldIndex = (oldIndex + 1) % items.length;
+            newIndex = (newIndex + 1) % capacity;
         }
-        items = a;
+
+        items = newItems;
+        front = capacity - 1;
+        rear = size;
     }
 
-
+    // Adds an item to the front of the deque
     public void addFirst(T item) {
         if (size == items.length) {
-            resize(size * REFACTOR);
+            resize(size * 2);
         }
-        items[nextFirst] = item;
-        nextFirst = (nextFirst - 1) % items.length;
-        size += 1;
-
+        items[front] = item;
+        front = (front - 1 + items.length) % items.length;
+        size++;
     }
 
+    // Adds an item to the end of the deque
     public void addLast(T item) {
         if (size == items.length) {
-            resize(size * REFACTOR);
+            resize(size * 2);
         }
-        items[nextLast] = item;
-        nextLast = (nextLast + 1) % items.length;
-        size += 1;
-
+        items[rear] = item;
+        rear = (rear + 1) % items.length;
+        size++;
     }
 
-    public boolean isEmpty() {
-        return size == 0;
+    // Removes and returns the item at the front of the deque
+    public T removeFirst() {
+        if (isEmpty()) {
+            return null;
+        }
+
+        front = (front + 1) % items.length;
+        T removedItem = items[front];
+        items[front] = null;
+        size--;
+
+        if (size <= items.length / 4 && items.length >= 16) {
+            resize(items.length / 2);
+        }
+
+        return removedItem;
     }
 
+    // Removes and returns the item at the end of the deque
+    public T removeLast() {
+        if (isEmpty()) {
+            return null;
+        }
+
+        rear = (rear - 1 + items.length) % items.length;
+        T removedItem = items[rear];
+        items[rear] = null;
+        size--;
+
+        if (size <= items.length / 4 && items.length >= 16) {
+            resize(items.length / 2);
+        }
+
+        return removedItem;
+    }
+
+    // Returns the item at the given index
+    public T get(int index) {
+        if (index < 0 || index >= size) {
+            return null;
+        }
+        int currentIndex = (front + 1 + index) % items.length;
+        return items[currentIndex];
+    }
+
+    // Returns the number of items in the deque
     public int size() {
         return size;
     }
 
-    public void printDeque() {
-        for (int i = 0; i < size; i++) {
-            int index = (nextFirst + i + 1) % items.length;
-            System.out.print(items[index]);
-        }
-        System.out.println();
-    }
-
-    public T removeFirst() {
-        if (size == 0) {
-            return null;
-        }
-        nextFirst = (nextFirst + 1) % items.length;
-        T item = items[nextFirst];
-        items[nextFirst] = null;
-        size -= 1;
-        return item;
-    }
-
-    public T removeLast() {
-        if (size == 0) {
-            return null;
-        }
-        nextLast = (nextLast - 1) % items.length;
-        T item = items[nextLast];
-        items[nextLast] = null;
-        size -= 1;
-        return item;
-    }
-
-    public T get(int index) {
-        index = (nextFirst + index + 1) % items.length;
-        return items[index];
-
+    // Checks if the deque is empty
+    public boolean isEmpty() {
+        return size == 0;
     }
 }
