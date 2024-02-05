@@ -1,11 +1,11 @@
 public class LinkedListDeque<T> {
 
     private class IntNode<T> {
-        private IntNode prev;
-        private T item;
-        private IntNode next;
+        IntNode prev;
+        T item;
+        IntNode next;
 
-        public IntNode(IntNode p, T i, IntNode n) {
+        IntNode(IntNode p, T i, IntNode n) {
             prev = p;
             item = i;
             next = n;
@@ -54,14 +54,16 @@ public class LinkedListDeque<T> {
         IntNode p = sentinel;
         while (p.next != sentinel) {
             p = p.next;
-            System.out.print(p.item+" ");
+            System.out.print(p.item + " ");
         }
         System.out.println();
     }
 
     public T removeFirst() {
 
-        if (size == 0) return null;
+        if (size == 0) {
+            return null;
+        }
 
         T p = (T) sentinel.next.item;
         sentinel.next = sentinel.next.next;
@@ -73,7 +75,9 @@ public class LinkedListDeque<T> {
 
     public T removeLast() {
 
-        if (size == 0) return null;
+        if (size == 0) {
+            return null;
+        }
 
         T p = (T) sentinel.prev.item;
         sentinel.prev = sentinel.prev.prev;
